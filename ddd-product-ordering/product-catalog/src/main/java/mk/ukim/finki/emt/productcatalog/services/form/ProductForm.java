@@ -8,4 +8,5 @@ public class ProductForm {
     private String productName;
     private Money price;
     private int sales;
+    private String image;
 }

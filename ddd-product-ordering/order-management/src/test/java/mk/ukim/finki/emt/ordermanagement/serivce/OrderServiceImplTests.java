@@ -28,10 +28,8 @@ public class OrderServiceImplTests {
     @Autowired
     private ProductClient productClient;
 
-
-
     private static Product newProduct(String name, Money price) {
-        Product p = new Product(ProductId.randomId(ProductId.class), name, price, 0);
+        Product p = new Product(ProductId.randomId(ProductId.class), name, price, 0, "https://media.tiffany.com/is/image/Tiffany/EcomItemL2/the-tiffany-setting-engagement-ring-in-platinum-22086588_995766_ED_M.jpg");
         return p;
     }
 
@@ -39,11 +37,11 @@ public class OrderServiceImplTests {
     public void testPlaceOrder() {
 
         OrderItemForm oi1 = new OrderItemForm();
-        oi1.setProduct(newProduct("Pizza",Money.valueOf(Currency.MKD,1500)));
+        oi1.setProduct(newProduct("Diamond Ring",Money.valueOf(Currency.MKD,1500)));
         oi1.setQuantity(1);
 
         OrderItemForm oi2 = new OrderItemForm();
-        oi2.setProduct(newProduct("Hot Dog",Money.valueOf(Currency.MKD,500)));
+        oi2.setProduct(newProduct("Golden Ring",Money.valueOf(Currency.MKD,500)));
         oi2.setQuantity(2);
 
         OrderForm orderForm = new OrderForm();
@@ -72,7 +70,7 @@ public class OrderServiceImplTests {
         oi2.setQuantity(2);
 
         OrderForm orderForm = new OrderForm();
-        orderForm.setCurrency(Currency.MKD);
+        orderForm.setCurrency(Currency.EUR);
         orderForm.setItems(Arrays.asList(oi1,oi2));
 
         OrderId newOrderId = orderService.placeOrder(orderForm);

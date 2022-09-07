@@ -18,17 +18,19 @@ public class Product extends AbstractEntity<ProductId> {
             @AttributeOverride(name="currency", column = @Column(name = "price_currency")),
     })
     private Money price;
+    private String image;
 
     private Product(){
         super(ProductId.randomId(ProductId.class));
     }
 
-    public static Product build(String productName, Money price, int sales)
+    public static Product build(String productName, Money price, int sales, String image)
     {
         Product product=new Product();
         product.price=price;
         product.productName=productName;
         product.sales=sales;
+        product.image=image;
         return product;
     }
     public void addSales(int qty) {

@@ -17,8 +17,8 @@ public class DataInitializer {
 
     @PostConstruct
     public void initData() {
-        Product p1 = Product.build("Pizza", Money.valueOf(Currency.MKD, 500), 100);
-        Product p2 = Product.build("Ice Cream", Money.valueOf(Currency.MKD, 100), 5);
+        Product p1 = Product.build("Diamond Ring", Money.valueOf(Currency.EUR, 500), 100,"https://image.brilliantearth.com/media/diamond_ring_vto/4S/BE1D6013_yellow_Oval_top_75_carat.png");
+        Product p2 = Product.build("Silver Ring", Money.valueOf(Currency.EUR, 100), 5,"https://media.tiffany.com/is/image/Tiffany/EcomItemL2/the-tiffany-setting-engagement-ring-in-platinum-22086588_995766_ED_M.jpg");
         if(productRepository.findAll().isEmpty())
         {
             productRepository.saveAll(Arrays.asList(p1, p2));

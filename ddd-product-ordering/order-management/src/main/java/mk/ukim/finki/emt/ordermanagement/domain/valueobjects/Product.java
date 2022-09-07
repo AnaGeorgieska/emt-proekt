@@ -13,23 +13,27 @@ public class Product implements ValueObject {
     private final String name;
     private final Money price;
     private final int sales;
+    private final String image;
 
     private Product() {
         this.id=ProductId.randomId(ProductId.class);
         this.name= "";
         this.price = Money.valueOf(Currency.MKD,0);
         this.sales = 0;
+        this.image = "";
     }
 
     @JsonCreator
     public Product(@JsonProperty("id") ProductId id,
                    @JsonProperty("productName") String name,
                    @JsonProperty("price") Money price,
-                   @JsonProperty("sales") int sales) {
+                   @JsonProperty("sales") int sales,
+                   @JsonProperty("image") String image) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.sales = sales;
+        this.image = image;
     }
 
 }

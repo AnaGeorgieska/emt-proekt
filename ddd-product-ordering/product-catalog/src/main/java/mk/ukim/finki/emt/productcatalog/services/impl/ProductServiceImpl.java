@@ -26,7 +26,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product createProduct(ProductForm form) {
-        Product p=Product.build(form.getProductName(), form.getPrice(), form.getSales());
+        Product p=Product.build(form.getProductName(), form.getPrice(), form.getSales(), form.getImage());
         productRepository.save(p);
         return p;
     }

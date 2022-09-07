@@ -9,6 +9,7 @@ const products = (props) => {
                   <table className={"table table-striped"}>
                       <thead>
                       <th scope={"col"}>Name</th>
+                      <th scope={"col"}>Image</th>
                       <th scope={"col"}>Price</th>
                       <th scope={"col"}>Currency</th>
                       <th scope={"col"}>Sales</th>
