@@ -33,6 +33,15 @@ public class Product extends AbstractEntity<ProductId> {
         product.image=image;
         return product;
     }
+
+    public Product edit(Product product, String productName, Money price, int sales, String image)
+    {
+        product.price=price;
+        product.productName=productName;
+        product.sales=sales;
+        product.image=image;
+        return product;
+    }
     public void addSales(int qty) {
         this.sales = this.sales - qty;
     }

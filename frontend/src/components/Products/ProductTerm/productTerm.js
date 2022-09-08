@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 const productTerm = (props) => {
     return (
@@ -8,6 +9,13 @@ const productTerm = (props) => {
             <td className={"col"}>{props.term.price.amount}</td>
             <td className={"col"}>{props.term.price.currency}</td>
             <td className={"col"}>{props.term.sales}</td>
+            <td className={"col text-right"}>
+                <Link className={"btn btn-info mx-2"}
+                    // onClick={()=>props.onEdit(props.term.id)}
+                      to={`/product/edit/${props.term.id.id}`}>
+                    Edit
+                </Link>
+            </td>
         </tr>
     )
 }
