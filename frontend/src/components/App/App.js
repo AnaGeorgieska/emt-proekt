@@ -6,6 +6,8 @@ import EShopService from "../../repository/eshopRepository";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import ProductAdd from "../Products/ProductAdd/productAdd";
 import ProductEdit from "../Products/ProductEdit/productEdit";
+import AddToOrderProduct from "../Products/AddToOrderProduct/addToOrderProduct";
+import Order from "../Products/Order/order";
 
 class App extends Component {
     constructor(props) {
@@ -25,9 +27,14 @@ class App extends Component {
                     <Route path="/product/add" element={<ProductAdd currency={this.state.currency}
                                                                 onAddBook={this.addProduct}/>} />
                     <Route path="/product/edit/:id" element={<ProductEdit currency={this.state.currency}
-                                                                     onEditProduct={this.editProduct}
-                                                                     product={this.state.selectedProduct}/>} />
+                                                                     />} />
+                    <Route path="/product/addToOrder/:id" element={<AddToOrderProduct
+                                                                          currency={this.state.currency}
+                                                                          onEditProduct={this.editProduct}
+                                                                          product={this.state.selectedProduct}/>} />
+
                     <Route path="/" element={<Products products={this.state.products}/>}/>
+                    <Route path="/order" element={<Order />}/>
 
                 </Routes>
             </BrowserRouter>

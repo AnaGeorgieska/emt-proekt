@@ -1,5 +1,6 @@
 package mk.ukim.finki.emt.ordermanagement.serivce;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import mk.ukim.finki.emt.ordermanagement.domain.exceptions.OrderIdNotExistException;
 import mk.ukim.finki.emt.ordermanagement.domain.model.Order;
 import mk.ukim.finki.emt.ordermanagement.domain.model.OrderId;
@@ -39,6 +40,15 @@ public class OrderServiceImplTests {
         OrderItemForm oi1 = new OrderItemForm();
         oi1.setProduct(newProduct("Diamond Ring",Money.valueOf(Currency.MKD,1500)));
         oi1.setQuantity(1);
+
+//        String string=null;
+//        ObjectMapper objectMapper=new ObjectMapper();
+//        try{
+//             string = objectMapper.writeValueAsString(oi1);
+//        }catch (Exception e){
+//
+//        }
+//        System.out.println(string);
 
         OrderItemForm oi2 = new OrderItemForm();
         oi2.setProduct(newProduct("Golden Ring",Money.valueOf(Currency.MKD,500)));

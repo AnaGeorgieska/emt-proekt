@@ -57,7 +57,6 @@ public class ProductResource {
                 .orElseGet(()->ResponseEntity.badRequest().build());
     }
 
-    //    return axios.get(`/books/mark/${id}`);
     @GetMapping("/currency")
     public List<Currency> findAll()
     {

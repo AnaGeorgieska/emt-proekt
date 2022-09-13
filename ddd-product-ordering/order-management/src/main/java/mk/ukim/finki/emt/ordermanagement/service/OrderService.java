@@ -16,7 +16,9 @@ public interface OrderService {
     List<Order> findAll();
     Optional<Order> findById(OrderId orderId);
 
-    void addItem(OrderId orderId, OrderItemForm orderItemForm) throws OrderIdNotExistException;
+    Optional<Order> findProcessingOrder();
+
+    void addItem(OrderItemForm orderItemForm) throws OrderIdNotExistException;
 
     void deleteItem(OrderId orderId, OrderItemId orderItemId) throws OrderIdNotExistException, OrderItemIdNotExistException;
 }

@@ -16,6 +16,12 @@ const productTerm = (props) => {
                     Edit
                 </Link>
             </td>
+            <td className={"col text-right"}>
+                <Link className={"btn btn-secondary mx-2"}
+                      to={`/product/addToOrder/${props.term.id.id}`}>
+                    Add to Order
+                </Link>
+            </td>
         </tr>
     )
 }

@@ -14,6 +14,8 @@ const products = (props) => {
                       <th scope={"col"}>Price</th>
                       <th scope={"col"}>Currency</th>
                       <th scope={"col"}>Sales</th>
+                      <th scope={"col"}> </th>
+                      <th scope={"col"}> </th>
                       </thead>
                       <tbody>
                       {props.products.map((term) => {

@@ -54,6 +54,7 @@ public class ProductServiceImpl implements ProductService {
         Product p=productRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
         p.addSales(quantity);
         productRepository.saveAndFlush(p);
+        System.out.println("orderItemCreated");
         return p;
     }
     @Override

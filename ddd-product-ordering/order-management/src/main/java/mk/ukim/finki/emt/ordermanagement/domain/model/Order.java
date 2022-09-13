@@ -34,6 +34,8 @@ public class Order extends AbstractEntity<OrderId> {
     public Order()
     {
         super(OrderId.randomId(OrderId.class));
+        this.orderState=OrderState.PROCESSING;
+        this.currency = Currency.EUR;
     }
     public Order(Instant now, Currency currency) {
         super(OrderId.randomId(OrderId.class));

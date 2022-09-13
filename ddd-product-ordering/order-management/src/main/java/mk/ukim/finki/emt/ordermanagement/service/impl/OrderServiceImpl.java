@@ -6,12 +6,12 @@ import mk.ukim.finki.emt.ordermanagement.domain.exceptions.OrderItemIdNotExistEx
 import mk.ukim.finki.emt.ordermanagement.domain.model.Order;
 import mk.ukim.finki.emt.ordermanagement.domain.model.OrderId;
 import mk.ukim.finki.emt.ordermanagement.domain.model.OrderItemId;
+import mk.ukim.finki.emt.ordermanagement.domain.model.OrderState;
 import mk.ukim.finki.emt.ordermanagement.domain.repository.OrderRepository;
 import mk.ukim.finki.emt.ordermanagement.service.OrderService;
 import mk.ukim.finki.emt.ordermanagement.service.forms.OrderForm;
 import mk.ukim.finki.emt.ordermanagement.service.forms.OrderItemForm;
 import mk.ukim.finki.emt.sharedkernel.domain.events.orders.OrderItemCreated;
-import mk.ukim.finki.emt.sharedkernel.domain.events.orders.OrderItemRemoved;
 import mk.ukim.finki.emt.sharedkernel.infra.DomainEventPublisher;
 import org.springframework.stereotype.Service;
 
@@ -41,9 +41,9 @@ public class OrderServiceImpl implements OrderService {
             throw new ConstraintViolationException("The order form is not valid", constraintViolations);
         }
         var newOrder = orderRepository.saveAndFlush(toDomainObject(orderForm));
-//        newOrder.getOrderItemList()
-//                .forEach(item->domainEventPublisher
-//                        .publish(new OrderItemCreated(item.getProductId().getId(), item.getQuantity())));
+        newOrder.getOrderItemList()
+                .forEach(item->domainEventPublisher
+                        .publishOrderItemCreated(new OrderItemCreated(item.getProductId().getId(), item.getQuantity())));
         return newOrder.getId();
     }
 
@@ -58,13 +58,26 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void addItem(OrderId orderId, OrderItemForm orderItemForm) throws OrderIdNotExistException {
-        Order order=orderRepository.findById(orderId).orElseThrow(OrderIdNotExistException::new);
-        order.addItem(orderItemForm.getProduct(), orderItemForm.getQuantity());
-        orderRepository.saveAndFlush(order);
-//        domainEventPublisher.publish(
-//                new OrderItemCreated(orderItemForm.getProduct().getId().getId(), orderItemForm.getQuantity()));
+    public Optional<Order> findProcessingOrder() {
+        return orderRepository.findByOrderState(OrderState.PROCESSING);
+    }
 
+    @Override
+    public void addItem(OrderItemForm orderItemForm) throws OrderIdNotExistException {
+//        Order order=orderRepository.findById(orderId).orElseThrow(OrderIdNotExistException::new);
+        Order order;
+        if(orderRepository.findByOrderState(OrderState.PROCESSING).isPresent())
+        {
+             order =orderRepository.findByOrderState(OrderState.PROCESSING).get();
+        }
+        else {
+            order=new Order();
+        }
+        order.addItem(orderItemForm.getProduct(), orderItemForm.getQuantity());
+        System.out.println(order.toString());
+        orderRepository.saveAndFlush(order);
+//        domainEventPublisher.publishOrderItemCreated(
+//                new OrderItemCreated(orderItemForm.getProduct().getId().getId(), orderItemForm.getQuantity()));
     }
 
     @Override
