@@ -13,6 +13,9 @@ import java.util.Optional;
 
 public interface OrderService {
     OrderId placeOrder(OrderForm orderForm);
+
+    OrderId placeOrder(Order order);
+
     List<Order> findAll();
     Optional<Order> findById(OrderId orderId);
 

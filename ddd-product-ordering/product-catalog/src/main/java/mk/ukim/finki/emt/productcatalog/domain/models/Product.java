@@ -43,7 +43,7 @@ public class Product extends AbstractEntity<ProductId> {
         return product;
     }
     public void addSales(int qty) {
-        this.sales = this.sales - qty;
+        this.sales = this.sales + qty;
     }
 
     public void removeSales(int qty) {

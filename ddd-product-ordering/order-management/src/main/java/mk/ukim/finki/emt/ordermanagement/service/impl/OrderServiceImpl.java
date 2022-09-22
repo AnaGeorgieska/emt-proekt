@@ -48,6 +48,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public OrderId placeOrder(Order order) {
+//        order.getOrderItemList()
+//                .forEach(item->domainEventPublisher
+//                        .publishOrderItemCreated(new OrderItemCreated(item.getProductId().getId(), item.getQuantity())));
+        order.setOrderState(OrderState.PROCESSED);
+        orderRepository.saveAndFlush(order);
+        return order.getId();
+    }
+
+    @Override
     public List<Order> findAll() {
         return orderRepository.findAll();
     }
@@ -64,7 +74,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void addItem(OrderItemForm orderItemForm) throws OrderIdNotExistException {
-//        Order order=orderRepository.findById(orderId).orElseThrow(OrderIdNotExistException::new);
         Order order;
         if(orderRepository.findByOrderState(OrderState.PROCESSING).isPresent())
         {
@@ -76,8 +85,8 @@ public class OrderServiceImpl implements OrderService {
         order.addItem(orderItemForm.getProduct(), orderItemForm.getQuantity());
         System.out.println(order.toString());
         orderRepository.saveAndFlush(order);
-//        domainEventPublisher.publishOrderItemCreated(
-//                new OrderItemCreated(orderItemForm.getProduct().getId().getId(), orderItemForm.getQuantity()));
+        domainEventPublisher.publishOrderItemCreated(
+                new OrderItemCreated(orderItemForm.getProduct().getId().getId(), orderItemForm.getQuantity()));
     }
 
     @Override

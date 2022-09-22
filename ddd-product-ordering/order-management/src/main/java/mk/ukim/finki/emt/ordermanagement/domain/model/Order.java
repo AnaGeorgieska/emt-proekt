@@ -10,9 +10,7 @@ import mk.ukim.finki.emt.sharedkernel.domain.financial.Money;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Getter
@@ -29,7 +27,7 @@ public class Order extends AbstractEntity<OrderId> {
     private Currency currency;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private Set<OrderItem> orderItemList= new HashSet<>();
+    private List<OrderItem> orderItemList= new ArrayList<>();
 
     public Order()
     {
@@ -58,5 +56,9 @@ public class Order extends AbstractEntity<OrderId> {
     {
         Objects.requireNonNull(orderItemId, "OrderItemId must not be null");
         orderItemList.removeIf(v->v.getId().equals(orderItemId));
+    }
+
+    public void setOrderState(OrderState orderState) {
+        this.orderState = orderState;
     }
 }

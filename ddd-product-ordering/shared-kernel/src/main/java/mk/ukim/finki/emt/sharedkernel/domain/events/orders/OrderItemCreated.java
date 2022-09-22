@@ -2,6 +2,7 @@ package mk.ukim.finki.emt.sharedkernel.domain.events.orders;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.Getter;
 import mk.ukim.finki.emt.sharedkernel.domain.config.TopicHolder;
 import mk.ukim.finki.emt.sharedkernel.domain.events.DomainEvent;
@@ -15,6 +16,9 @@ public class OrderItemCreated {
     private int quantity;
     private String topic;
     private Instant occurredOn;
+
+    public OrderItemCreated() {
+    }
 
     public OrderItemCreated(String topic) {
         this.occurredOn = Instant.now();
@@ -32,7 +36,8 @@ public class OrderItemCreated {
         this.quantity = quantity;
     }
     public String toJson() {
-        ObjectMapper objectMapper = new ObjectMapper();
+//        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
         String jsonInString = null;
         try {
             jsonInString = objectMapper.writeValueAsString(this);
@@ -41,16 +46,22 @@ public class OrderItemCreated {
         }
         System.out.println(jsonInString);
         return jsonInString;
-
     }
 
     public String topic() {
         return topic;
     }
 
-    public static <E extends OrderItemCreated> E fromJson(String json, Class<E> eventClass) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(json,eventClass);
+//    public static <E extends OrderItemCreated> E fromJson(String json, Class<E> eventClass) throws IOException {
+////        ObjectMapper objectMapper = new ObjectMapper();
+//        ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
+//        return objectMapper.readValue(json,eventClass);
+//    }
+
+    public static OrderItemCreated  fromJson(String json) throws IOException {
+//        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
+        return objectMapper.readValue(json,OrderItemCreated.class);
     }
 
 }

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import mk.ukim.finki.emt.ordermanagement.domain.model.Order;
 import mk.ukim.finki.emt.ordermanagement.domain.valueobjects.Product;
 import mk.ukim.finki.emt.ordermanagement.service.OrderService;
+import mk.ukim.finki.emt.ordermanagement.service.forms.OrderForm;
 import mk.ukim.finki.emt.ordermanagement.service.forms.OrderItemForm;
 import mk.ukim.finki.emt.ordermanagement.service.forms.OrderItemFormProps;
 import mk.ukim.finki.emt.sharedkernel.domain.financial.Money;
@@ -28,6 +29,15 @@ public class OrderController {
 
     }
 
+    @GetMapping("/total")
+    public ResponseEntity<Integer> getTotal()
+    {
+        System.out.println("order");
+        return orderService.findProcessingOrder()
+                .map(order -> ResponseEntity.ok().body((int)order.total().getAmount()))
+                .orElseGet(()-> ResponseEntity.notFound().build());
+    }
+
     @PostMapping("/addToOrder")
     public void addToOrder(@RequestBody OrderItemFormProps orderItemForm)
     {
@@ -38,11 +48,14 @@ public class OrderController {
                 orderItemForm.getSales(), orderItemForm.getImage()));
         oi1.setQuantity(orderItemForm.getQuantity());
         orderService.addItem(oi1);
-//        return this.productService.editProduct(ProductId.of(id),productForm)
-//                .map(book -> ResponseEntity.ok().body(book))
-//                .orElseGet(()->ResponseEntity.badRequest().build());
         return ;
     }
 
-
+    @PostMapping("/placeOrder")
+    public void placeOrder()
+    {
+        System.out.println("place order");
+        Order order=orderService.findProcessingOrder().get();
+        orderService.placeOrder(order);
+    }
 }

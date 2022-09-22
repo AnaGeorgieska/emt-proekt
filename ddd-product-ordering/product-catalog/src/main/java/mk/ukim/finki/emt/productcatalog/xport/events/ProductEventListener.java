@@ -19,7 +19,9 @@ public class ProductEventListener {
     @KafkaListener(topics = TopicHolder.TOPIC_ORDER_ITEM_CREATED, groupId = "productCatalog")
     public void consumeOrderItemCreatedEvent(String jsonMessage){
         try{
-            OrderItemCreated event= OrderItemCreated.fromJson(jsonMessage, OrderItemCreated.class);
+            System.out.println(jsonMessage);
+            OrderItemCreated event= OrderItemCreated.fromJson(jsonMessage);
+            System.out.println(event.toString());
             productService.orderItemCreated(ProductId.of(event.getProductId()), event.getQuantity());
             System.out.println("Listener");
         }catch (Exception e){

@@ -27,9 +27,9 @@ const ProductAdd = (props) => {
     }
 
     return (
-        <div className="container mm-4 mt-5">
-            <div className="row mt-5">
-                <div className="col-md-5">
+        <div className="container mm-4 mt-5 d-flex">
+            <div className="w-50 row m-auto">
+                <div className="">
                     <form onSubmit={onFormSubmit}>
                         <div className="form-group mt-2">
                             <label htmlFor="productName">Product name</label>
